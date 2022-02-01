@@ -1,0 +1,25 @@
+version: '3.9'
+
+volumes:
+  omd-sites:
+  cmk-backup:
+
+services:
+  check_mk:
+    image: checkmk/check-mk-raw:2.0.0-latest
+    tmpfs:
+      - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 1024
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - omd-sites:/omd/sites
+    ports:
+      - 8080:5000
+      - 6557:6557
+    environment:
+      - CMK_SITE_ID=${CMK_SITE_ID}
+      - CMK_PASSWORD=${CMK_PASSWORD}
