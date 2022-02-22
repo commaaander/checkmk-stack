@@ -6,7 +6,9 @@ volumes:
 
 services:
   check_mk:
-    image: checkmk/check-mk-raw:2.0.0-latest
+    build:
+      dockerfile: Dockerfile
+      context: .
     tmpfs:
       - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
     ulimits:
@@ -16,6 +18,7 @@ services:
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - cmk-backup:/mnt/backup
       - omd-sites:/omd/sites
     ports:
       - 8080:5000
