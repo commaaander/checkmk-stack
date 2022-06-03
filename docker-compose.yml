@@ -6,7 +6,9 @@ volumes:
 
 
 services:
-  check_mk:
+  checkmk:
+    container_name: "checkmk"
+    hostname: "checkmk"
     build:
       dockerfile: "Dockerfile"
       context: "."
